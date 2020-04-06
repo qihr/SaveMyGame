@@ -3,6 +3,7 @@ import sys
 import LoadLocalFile
 import CopyFile
 import platform
+import GameSaveClass
 
 def main():
     print("Start Work")
