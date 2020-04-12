@@ -1,4 +1,3 @@
-from ModuleData.GameSaveClass import GameSave
 import SteamDataProcess
 import DBHelper
 import CSVHelper
@@ -28,7 +27,6 @@ def CompareCSVAndLocal():
     deleteinfolist = []
     for info in LocalInfoList:
         if all(x.SteamId != info.SteamId for x in CSVInfoList):
-            print(info.GameName)
             newinfolist.append(info)
     for info in CSVInfoList:
         if info not in LocalInfoList:
@@ -42,7 +40,7 @@ def CompareCSVAndLocal():
 
 # 将删除的数据写入数据库
 def SaveDeletedInfo(deletelist):
-    print("a")
+    print("被删除数据处理")
 
 
 # 本地是否与csv不同
@@ -69,11 +67,10 @@ def Init():
         print('LocalInfoList的数据数量', len(LocalInfoList))
         GameInfoList.extend(LocalInfoList)
         CSVHelper.InitCsv()
+    print("向数据库查询存档位置")
     ProcessFromDB()
     print('GameInfoList的数据数量',len(GameInfoList))
     CSVHelper.WriteInfosToCSV(GameInfoList)
-Init()
-
 
 
 

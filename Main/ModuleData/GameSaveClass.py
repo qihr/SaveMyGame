@@ -1,4 +1,4 @@
-class GameSave:
+class GameInfo:
     SteamId = 0
     GameName = ""
     GamePath = ""

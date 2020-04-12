@@ -1,13 +1,12 @@
-import LoadLocalFile
 import CopyFile
 import platform
+import DataProcess
 
 
 def main():
     print("Start Work")
-    print('System Bit' + str(platform.architecture()))
-    GameList = LoadLocalFile.LoadGameCFG()
-    CopyFile.CopyFile(GameList);
+    print('操作系统信息：' + str(platform.architecture()))
+    DataProcess.Init();
 
 
 if __name__ == "__main__":

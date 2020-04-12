@@ -1,33 +1,34 @@
 import csv
-from ModuleData.GameSaveClass import GameSave
+from ModuleData.GameSaveClass import GameInfo
+import Config
 
-UserInfoPath = "GameLocationInfo.csv"
 
-
+# 初始化CSV
 def InitCsv():
-    with open(UserInfoPath, 'w', newline='', encoding='utf_8_sig') as csvfile:
+    with open(Config.UserInfoPath, 'w', newline='', encoding='utf_8_sig') as csvfile:
         csv_write = csv.writer(csvfile)
         csv_write.writerow(['SteamID', 'Name','Path','GamePathName'])
 
 
+# 写入CSV
 def WriteInfoToCsv(gamesave):
-    with open(UserInfoPath, 'a',newline ='',encoding="utf_8_sig") as f:
+    with open(Config.UserInfoPath, 'a',newline ='',encoding="utf_8_sig") as f:
         csv_write = csv.writer(f)
         data_row = [gamesave.SteamId, gamesave.GameName,gamesave.GamePath]
         csv_write.writerow(data_row)
 
 
+# 列表写入CSV
 def WriteInfosToCSV(list):
     for info in list:
         WriteInfoToCsv(info)
 
 
-
+# 读取CSV
 def LoadGameCSV():
-    print("Load Local csv....")
-    with open(UserInfoPath, 'r', newline='', encoding='utf_8_sig') as csvfile:
+    with open(Config.UserInfoPath, 'r', newline='', encoding='utf_8_sig') as csvfile:
         reader = csv.reader(csvfile)
         gamesters = []
         for item in reader:
-            gamesters.append(GameSave(item[0], item[1], item[2]))
+            gamesters.append(GameInfo(item[0], item[1], item[2]))
     return gamesters

@@ -1,7 +1,7 @@
 import winreg
 from steamfiles import acf
 import os
-from ModuleData.GameSaveClass import GameSave
+from ModuleData.GameSaveClass import GameInfo
 
 SteamHKey = r'SOFTWARE\WOW6432Node\Valve\Steam'
 GamesPath = ''
@@ -17,7 +17,7 @@ def FindGamesLocation():
     # set games info location path
     global GamesPath
     GamesPath = location + '\steamapps'
-    print(GamesPath)
+    print('Steam安装位置:' , GamesPath)
 
 
 # create game save class from acf file
@@ -26,7 +26,7 @@ def CreateGameSaveClass(path):
     with open(path, encoding="utf-8") as f:
         line = f.read()
     data = acf.loads(line)
-    return GameSave(data['AppState']['appid'], data['AppState']['name'], data['AppState']['installdir'])
+    return GameInfo(data['AppState']['appid'], data['AppState']['name'], data['AppState']['installdir'])
 
 
 # init local game config,when first launch app
