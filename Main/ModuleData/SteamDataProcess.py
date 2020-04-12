@@ -1,9 +1,7 @@
 import winreg
 from steamfiles import acf
 import os
-from GameSaveClass import GameSave
-import csv
-import codecs
+from ModuleData.GameSaveClass import GameSave
 
 SteamHKey = r'SOFTWARE\WOW6432Node\Valve\Steam'
 GamesPath = ''
@@ -11,6 +9,7 @@ GamesPath = ''
 
 # find steam and acf file path
 def FindGamesLocation():
+
     # find Steam install path
     handle = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, SteamHKey)
     location, _type = winreg.QueryValueEx(handle, "InstallPath")
@@ -27,27 +26,12 @@ def CreateGameSaveClass(path):
     with open(path, encoding="utf-8") as f:
         line = f.read()
     data = acf.loads(line)
-    return GameSave(data['AppState']['appid'], data['AppState']['name'], path)
-
-
-def InitCsv():
-    path = "GameLocationInfo.csv"
-
-    with open(path, 'w', newline='', encoding='utf_8_sig') as csvfile:
-        csv_write = csv.writer(csvfile)
-        csv_write.writerow(['SteamID', 'Name','Path'])
-
-
-def WriteGameInfoToCsv(gamesave):
-    path = "GameLocationInfo.csv"
-    with open(path, 'a',newline ='',encoding="utf_8_sig") as f:
-        csv_write = csv.writer(f)
-        data_row = [gamesave.SteamId, gamesave.GameName,gamesave.GamePath]
-        csv_write.writerow(data_row)
+    return GameSave(data['AppState']['appid'], data['AppState']['name'], data['AppState']['installdir'])
 
 
 # init local game config,when first launch app
-def InitGamesInfoCsv():
+def GetSteamGames():
+    FindGamesLocation()
     allfiles = os.listdir(GamesPath)
     acf_file_paths = []
 
@@ -56,10 +40,12 @@ def InitGamesInfoCsv():
         if os.path.splitext(f)[1] == '.acf':
             acf_file_paths.append(f)
 
-    InitCsv()
+    # InitCsv()
+    gamelist = []
     for file in acf_file_paths:
         gamesave = CreateGameSaveClass(GamesPath + '\\' + file)
-        WriteGameInfoToCsv(gamesave)
+        gamelist.append(gamesave)
+    return gamelist
 
-FindGamesLocation()
-InitGamesInfoCsv()
+
+

@@ -1,5 +1,5 @@
 import csv
-from GameSaveClass import GameSave
+from ModuleData.GameSaveClass import GameSave
 
 
 def LoadGameCFG():
