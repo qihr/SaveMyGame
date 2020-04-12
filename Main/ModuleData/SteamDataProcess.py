@@ -45,6 +45,7 @@ def GetSteamGames():
     for file in acf_file_paths:
         gamesave = CreateGameSaveClass(GamesPath + '\\' + file)
         gamelist.append(gamesave)
+    print("steam库中游戏数量:",len(gamelist));
     return gamelist
 
 
