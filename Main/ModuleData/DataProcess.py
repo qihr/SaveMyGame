@@ -40,7 +40,7 @@ def CompareCSVAndLocal():
 
 # 将删除的数据写入数据库
 def SaveDeletedInfo(deletelist):
-    print("被删除数据处理")
+     ("被删除数据处理")
 
 
 # 本地是否与csv不同
