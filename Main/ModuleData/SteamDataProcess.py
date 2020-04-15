@@ -1,23 +1,7 @@
-import winreg
+import Config
 from steamfiles import acf
 import os
 from ModuleData.GameSaveClass import GameInfo
-
-SteamHKey = r'SOFTWARE\WOW6432Node\Valve\Steam'
-GamesPath = ''
-
-
-# find steam and acf file path
-def FindGamesLocation():
-
-    # find Steam install path
-    handle = winreg.OpenKey(winreg.HKEY_LOCAL_MACHINE, SteamHKey)
-    location, _type = winreg.QueryValueEx(handle, "InstallPath")
-
-    # set games info location path
-    global GamesPath
-    GamesPath = location + '\steamapps'
-    print('Steam安装位置:' , GamesPath)
 
 
 # create game save class from acf file
@@ -31,8 +15,7 @@ def CreateGameSaveClass(path):
 
 # init local game config,when first launch app
 def GetSteamGames():
-    FindGamesLocation()
-    allfiles = os.listdir(GamesPath)
+    allfiles = os.listdir(Config.SteamInstallPath)
     acf_file_paths = []
 
     for f in allfiles:
@@ -43,7 +26,7 @@ def GetSteamGames():
     # InitCsv()
     gamelist = []
     for file in acf_file_paths:
-        gamesave = CreateGameSaveClass(GamesPath + '\\' + file)
+        gamesave = CreateGameSaveClass(Config.SteamInstallPath + '\\' + file)
         gamelist.append(gamesave)
     print("steam库中游戏数量:",len(gamelist));
     return gamelist
