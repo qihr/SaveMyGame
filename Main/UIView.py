@@ -1,8 +1,9 @@
 import wx
 import wx.adv
+import Config
 
 class MyTaskBarIcon(wx.adv.TaskBarIcon):
-    ICON = "logo.ico"  # 图标地址
+    ICON = Config.IconPath  # 图标地址
     ID_ABOUT = wx.NewIdRef()  # 菜单选项“关于”的ID
     ID_EXIT = wx.NewIdRef()  # 菜单选项“退出”的ID
     ID_SHOW_WEB = wx.NewIdRef()  # 菜单选项“显示页面”的ID
