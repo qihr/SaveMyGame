@@ -5,6 +5,7 @@ from sys import exit
 import os
 import shutil
 
+EnvironmentVar = {}
 
 def IsHaveLocalCSV():
     print('本地是否存在文件：', os.path.exists(Config.UserInfoPath))
@@ -27,3 +28,25 @@ def CopyFile(gamelist):
             print("Unable to copy file. %s" % e)
         except:
             print("Unexpected error:")
+
+
+def InitEnvironmentVar():
+    EnvironmentVar['%SteamAppPath%'] = Config.SteamInstallPath;
+    EnvironmentVar['%appdata%'] = os.environ['appdata'];
+    os.environ['SteamAppPath'] = Config.SteamInstallPath
+
+
+def Init():
+    InitEnvironmentVar()
+
+# print(os.environ['appdata'])
+# print(os.environ['SteamAppPath'])
+
+
+
+
+
+
+
+
+

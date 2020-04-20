@@ -14,6 +14,14 @@ def ProcessFromDB():
         AddSavePathData(Info)
 
 
+# 根据环境变量格式化路径
+def FormatSavePath():
+    for info in GameInfoList:
+        for key in FileHelper.EnvironmentVar:
+            if key in info.GamePath:
+                info.GamePath = info.GamePath.replace(key, FileHelper.EnvironmentVar[key], 1);
+                print("匹配成功：" + info.GamePath, key)
+
 # 从数据库添加信息
 def AddSavePathData(info):
     res = DBHelper.CheckSteamInfo(info.SteamId)
@@ -69,6 +77,7 @@ def Init():
         CSVHelper.InitCsv()
     print("向数据库查询存档位置")
     ProcessFromDB()
+    FormatSavePath()
     print('GameInfoList的数据数量',len(GameInfoList))
     CSVHelper.WriteInfosToCSV(GameInfoList)
 
