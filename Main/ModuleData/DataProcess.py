@@ -17,10 +17,8 @@ def ProcessFromDB():
 # 根据环境变量格式化路径
 def FormatSavePath():
     for info in GameInfoList:
-        for key in FileHelper.EnvironmentVar:
-            if key in info.GamePath:
-                info.GamePath = info.GamePath.replace(key, FileHelper.EnvironmentVar[key], 1);
-                print("匹配成功：" + info.GamePath, key)
+        info.GamePath = FileHelper.ReplaceEnvironment(info)
+
 
 # 从数据库添加信息
 def AddSavePathData(info):

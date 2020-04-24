@@ -23,7 +23,6 @@ def GetSteamGames():
         if os.path.splitext(f)[1] == '.acf':
             acf_file_paths.append(f)
 
-    # InitCsv()
     gamelist = []
     for file in acf_file_paths:
         gamesave = CreateGameSaveClass(Config.SteamInstallPath + '\\' + file)

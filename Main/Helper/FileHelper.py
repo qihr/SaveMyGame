@@ -31,9 +31,23 @@ def CopyFile(gamelist):
 
 
 def InitEnvironmentVar():
-    EnvironmentVar['%SteamAppPath%'] = Config.SteamInstallPath;
+    EnvironmentVar['%InstallName%'] = ""
+    EnvironmentVar['%SteamAppPath%'] =os.path.join(Config.SteamInstallPath, 'common');
     EnvironmentVar['%appdata%'] = os.environ['appdata'];
     os.environ['SteamAppPath'] = Config.SteamInstallPath
+
+
+def ReplaceEnvironment(info):
+    pathstr = info.GamePath
+    for key in EnvironmentVar:
+        if key in pathstr:
+            if key == '%InstallName%':
+                print("游戏安装目录：" + info.InstallName + "" + key)
+                pathstr = pathstr.replace(key, info.InstallName, 1);
+            else:
+                pathstr = pathstr.replace(key, EnvironmentVar[key], 1);
+            print("匹配成功：" + pathstr)
+    return pathstr
 
 
 def Init():

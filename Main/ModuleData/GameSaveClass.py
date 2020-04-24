@@ -1,11 +1,13 @@
 class GameInfo:
     SteamId = 0
     GameName = ""
+    SavePath = ""
+    InstallName = ""
     GamePath = ""
-    GameSaveName = ""
 
-    def __init__(self, id, name, installname, path='None',):
+    def __init__(self, id, name, installname, path='None',gamepath='None'):
         self.SteamId = id
         self.GameName = name
-        self.GamePath = path
-        self.GameSaveName = installname
+        self.SavePath = path
+        self.InstallName = installname
+        self.GamePath = gamepath
