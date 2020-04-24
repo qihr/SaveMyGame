@@ -3,12 +3,15 @@ import winreg
 
 IconName = 'logo.ico'
 ResPath = 'Res'
+BackUpDir = 'BackUp'
 DBName = 'GameSaveInfo.db'
-InfoPath = 'GameLocationInfo.csv'
+TableName = 'GameLocationInfo.csv'
 FilePath = os.getcwd()
 
+BackUpPath = os.path.abspath(os.path.join(FilePath,'..', BackUpDir))
+print('备份文件夹位置:' ,BackUpPath)
 DBPath = os.path.abspath(os.path.join(FilePath, '..', ResPath, DBName))
-UserInfoPath = os.path.abspath(os.path.join(FilePath, '..', ResPath, InfoPath))
+UserInfoPath = os.path.abspath(os.path.join(FilePath, '..', ResPath, TableName))
 IconPath = os.path.abspath(os.path.join(FilePath, '..', ResPath, IconName))
 
 SteamHKey = r'SOFTWARE\WOW6432Node\Valve\Steam'

@@ -59,7 +59,7 @@ def IsDataDifferent():
 
 
 def Init():
-    global LocalInfoList, CSVInfoList
+    global LocalInfoList, CSVInfoList,GameInfoList
     LocalInfoList = SteamDataProcess.GetSteamGames()
     if FileHelper.IsHaveLocalCSV():
         CSVInfoList = CSVHelper.LoadGameCSV()

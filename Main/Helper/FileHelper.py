@@ -4,6 +4,7 @@ from shutil import copyfile
 from sys import exit
 import os
 import shutil
+import time
 
 EnvironmentVar = {}
 
@@ -13,9 +14,17 @@ def IsHaveLocalCSV():
 
 
 def CopyFile(gamelist):
-    for gameinfo in gamelist:
-        source = gameinfo.GamePath
-        target = "E:/CodeProject/SaveMyGame/GameBackUp"
+    for info in gamelist:
+        source = info.GamePath
+        timestr = time.strftime('%Y-%m-%d %H-%M-%S',time.localtime(time.time()))
+        target = os.path.join(Config.BackUpPath, info.InstallName, timestr)
+        print('路径', target)
+        if os.path.exists(target):
+            i = 1;
+            while os.path.exists((target + '({0})').format(i)):
+                print('路径', target)
+                i+=1
+            target = (target + '({0})').format(i)
 
         #assert not os.path.isabs(source)
         #target = os.path.join(target, os.path.dirname(source))
@@ -50,8 +59,15 @@ def ReplaceEnvironment(info):
     return pathstr
 
 
+def InitDir():
+    if not os.path.exists(Config.BackUpPath):
+        os.makedirs(Config.BackUpPath)
+
+
+
 def Init():
     InitEnvironmentVar()
+    InitDir()
 
 # print(os.environ['appdata'])
 # print(os.environ['SteamAppPath'])
