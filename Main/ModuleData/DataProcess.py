@@ -6,6 +6,7 @@ import FileHelper
 GameInfoList = []
 LocalInfoList = []
 CSVInfoList = []
+RunningList = []
 
 
 # 格式化Gameinfo为正规数据

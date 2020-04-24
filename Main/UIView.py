@@ -1,6 +1,8 @@
 import wx
 import wx.adv
 import Config
+import UIControl
+
 
 class MyTaskBarIcon(wx.adv.TaskBarIcon):
     ICON = Config.IconPath  # 图标地址
@@ -26,7 +28,7 @@ class MyTaskBarIcon(wx.adv.TaskBarIcon):
 
     # “显示页面”选项的事件处理器
     def onShowWeb(self, event):
-        pass
+        UIControl.ShortSave()
 
     # 创建菜单选项
     def CreatePopupMenu(self):
@@ -37,7 +39,7 @@ class MyTaskBarIcon(wx.adv.TaskBarIcon):
 
     # 获取菜单的属性元组
     def getMenuAttrs(self):
-        return [('进入程序', self.ID_SHOW_WEB),
+        return [('快捷备份', self.ID_SHOW_WEB),
                 ('关于', self.ID_ABOUT),
                 ('退出', self.ID_EXIT)]
 

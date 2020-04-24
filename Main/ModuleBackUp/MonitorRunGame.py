@@ -2,7 +2,6 @@ import os
 import time
 import psutil
 
-
 # 游戏是否运行
 def IsGameRunning(gamename):
     try:
@@ -24,6 +23,7 @@ def IsGameRunning2(gamename):
     for pid in pids:
         p = psutil.Process(pid)
         if p.name() == gamename:
+            print(p.exe())
             return True
     return False
 
