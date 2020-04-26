@@ -1,5 +1,7 @@
 import os
 import winreg
+import socket
+import getpass
 
 IconName = 'logo.ico'
 ResPath = 'Res'
@@ -7,6 +9,7 @@ BackUpDir = 'BackUp'
 DBName = 'GameSaveInfo.db'
 TableName = 'GameLocationInfo.csv'
 FilePath = os.getcwd()
+UseName = ('{0}\{1}').format(socket.gethostname(),getpass.getuser())
 
 BackUpPath = os.path.abspath(os.path.join(FilePath,'..', BackUpDir))
 print('备份文件夹位置:' ,BackUpPath)

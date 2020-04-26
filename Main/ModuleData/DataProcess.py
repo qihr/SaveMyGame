@@ -10,14 +10,14 @@ RunningList = []
 
 
 # 格式化Gameinfo为正规数据
-def ProcessFromDB():
-    for Info in GameInfoList:
-        AddSavePathData(Info)
+def ProcessFromDB(list):
+    for info in list:
+        AddSavePathData(info)
 
 
 # 根据环境变量格式化路径
-def FormatSavePath():
-    for info in GameInfoList:
+def FormatSavePath(list):
+    for info in list:
         info.GamePath = FileHelper.ReplaceEnvironment(info)
 
 
@@ -42,12 +42,13 @@ def CompareCSVAndLocal():
 
     SaveDeletedInfo(deleteinfolist)
     # GameInfoList.extend(CSVInfoList)
-    GameInfoList.extend(newinfolist)
+    # GameInfoList.extend(newinfolist)
+    return newinfolist
 
 
 # 将删除的数据写入数据库
 def SaveDeletedInfo(deletelist):
-     ("被删除数据处理")
+    pass
 
 
 # 本地是否与csv不同
@@ -59,32 +60,22 @@ def IsDataDifferent():
 
 
 def Init():
-    global LocalInfoList, CSVInfoList,GameInfoList
+    global LocalInfoList, CSVInfoList, GameInfoList
     LocalInfoList = SteamDataProcess.GetSteamGames()
     if FileHelper.IsHaveLocalCSV():
         CSVInfoList = CSVHelper.LoadGameCSV()
-        print('CSVInfoList的数据数量', len(CSVInfoList))
         if IsDataDifferent():
-            print("游戏信息不一致，进入比较处理流程")
-            CompareCSVAndLocal()
+            newlist = CompareCSVAndLocal()
+            ProcessFromDB(newlist)
+            FormatSavePath(newlist)
+            CSVHelper.WriteInfosToCSV(newlist)
         else:
-            print("游戏信息一致，退出")
-            return;
+            GameInfoList = CSVInfoList;
+            ProcessFromDB(GameInfoList)
+            FormatSavePath(GameInfoList)
     else:
-        print('LocalInfoList的数据数量', len(LocalInfoList))
         GameInfoList.extend(LocalInfoList)
         CSVHelper.InitCsv()
-    print("向数据库查询存档位置")
-    ProcessFromDB()
-    FormatSavePath()
-    print('GameInfoList的数据数量',len(GameInfoList))
-    CSVHelper.WriteInfosToCSV(GameInfoList)
-
-
-
-
-
-
-
-
-
+        ProcessFromDB(GameInfoList)
+        FormatSavePath(GameInfoList)
+        CSVHelper.WriteInfosToCSV(GameInfoList)

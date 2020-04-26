@@ -1,38 +1,25 @@
 import os
 import time
 import psutil
+import Config
+import DataProcess
+import FileHelper
 
-# 游戏是否运行
-def IsGameRunning(gamename):
-    try:
-        print('tasklist | findstr ' + gamename)
-        process = len(os.popen('tasklist | findstr ' + gamename).readlines())
-        print(process)
-        if process >= 1:
-            return True
-        else:
-            return False
-    except:
-        print("程序错误")
-        return False
-
-
-# 游戏是否运行第二种实现方法
-def IsGameRunning2(gamename):
+def GetRunningGame():
     pids = psutil.pids()
+    list = []
     for pid in pids:
-        p = psutil.Process(pid)
-        if p.name() == gamename:
-            print(p.exe())
-            return True
-    return False
-
-
-if __name__=="__main__":
-    flag=True
-    while flag:
-        flag = IsGameRunning2("Battle.net.exe")
-        print(flag)
-        if flag == False:
-            print("关闭了！")
-        time.sleep(10)##每隔60s进行检查
+        try:
+            p = psutil.Process(pid)
+            if not Config.UseName == p.username():
+                continue
+            for info in DataProcess.GameInfoList:
+                if FileHelper.IsSamePath(p.exe(), info.InstallName):
+                    list.append(info)
+        except psutil.NoSuchProcess:
+            print("no process found with pid=", pid)
+    str = ''
+    for info in list:
+        str += info.GameName
+    print('正在进行的游戏：',str)
+    return list

@@ -14,7 +14,7 @@ def InitCsv():
 def WriteInfoToCsv(gamesave):
     with open(Config.UserInfoPath, 'a',newline ='',encoding="utf_8_sig") as f:
         csv_write = csv.writer(f)
-        data_row = [gamesave.SteamId, gamesave.GameName,gamesave.GamePath]
+        data_row = [gamesave.SteamId, gamesave.GameName,gamesave.GamePath,gamesave.InstallName]
         csv_write.writerow(data_row)
 
 
@@ -29,6 +29,8 @@ def LoadGameCSV():
     with open(Config.UserInfoPath, 'r', newline='', encoding='utf_8_sig') as csvfile:
         reader = csv.reader(csvfile)
         gamesters = []
-        for item in reader:
-            gamesters.append(GameInfo(item[0], item[1], item[2]))
+        for i, item in enumerate(reader):
+            if i == 0:
+                continue
+            gamesters.append(GameInfo(item[0], item[1], item[3] ,item[2]))
     return gamesters

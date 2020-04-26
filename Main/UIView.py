@@ -56,6 +56,9 @@ class MyApp(wx.App):
         return True
 
 
-if __name__ == "__main__":
+def Init():
     app = MyApp()
     app.MainLoop()
+
+if __name__ == "__main__":
+    Init()

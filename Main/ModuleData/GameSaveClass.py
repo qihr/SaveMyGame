@@ -1,3 +1,6 @@
+import os
+
+import Config
 class GameInfo:
     SteamId = 0
     GameName = ""
@@ -11,5 +14,5 @@ class GameInfo:
         self.GameName = name
         self.SavePath = path
         self.InstallName = installname
-        self.GamePath = gamepath
+        self.GamePath = os.path.join(Config.SteamInstallPath, 'common',installname)
         self.ExecuteName = exe
