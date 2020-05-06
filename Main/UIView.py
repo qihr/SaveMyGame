@@ -3,6 +3,7 @@ import wx.adv
 import Config
 import UIControl
 
+app = None
 
 class MyTaskBarIcon(wx.adv.TaskBarIcon):
     ICON = Config.IconPath  # 图标地址
@@ -35,6 +36,7 @@ class MyTaskBarIcon(wx.adv.TaskBarIcon):
         menu = wx.Menu()
         for mentAttr in self.getMenuAttrs():
             menu.Append(mentAttr[1], mentAttr[0])
+        menu.SetLabel(self.ID_SHOW_WEB, '222')
         return menu
 
     # 获取菜单的属性元组
@@ -57,6 +59,7 @@ class MyApp(wx.App):
 
 
 def Init():
+    global app
     app = MyApp()
     app.MainLoop()
 

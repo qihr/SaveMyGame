@@ -1,4 +1,6 @@
 import os
+import threading
+
 import Config
 from shutil import copyfile
 from sys import exit
@@ -7,7 +9,7 @@ import shutil
 import time
 
 EnvironmentVar = {}
-
+copyfilelock = threading.Lock()
 
 def IsSamePath(pidpath,installname):
    replacepath = (pidpath.replace(os.path.join(Config.SteamInstallPath, 'common\\'), '', 1))
@@ -22,7 +24,7 @@ def IsHaveLocalCSV():
     return os.path.exists(Config.UserInfoPath)
 
 
-def CopyFile(gamelist):
+def CopyFileWithLock(gamelist):
     for info in gamelist:
         source = info.GamePath
         timestr = time.strftime('%Y-%m-%d %H-%M-%S',time.localtime(time.time()))
@@ -48,6 +50,14 @@ def CopyFile(gamelist):
     for info in gamelist:
         str += info.GameName + ','
     print("备份完成：" + str)
+
+
+def CopyFile(gamelist):
+    copyfilelock.acquire()
+    try:
+        CopyFileWithLock (gamelist)
+    finally:
+        copyfilelock.release()
 
 
 

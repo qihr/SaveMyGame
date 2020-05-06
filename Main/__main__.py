@@ -6,20 +6,17 @@ import MonitorRunGame
 import getpass
 import time
 import socket
-
+import threading
 
 def main():
     print("Start Work")
     print('操作系统信息：' + str(platform.architecture()))
     FileHelper.Init()
     DataProcess.Init()
+    t = threading.Thread(target=MonitorRunGame.Monitor)
+    t.start()
+
     UIView.Init()
-    while True:
-        for info in DataProcess.GameInfoList:
-            # print("检查的游戏:",info.GameName)
-            if MonitorRunGame.IsGameRunning3(info):
-                print(info.GameName)
-    time.sleep(10)
 
 
 if __name__ == "__main__":
